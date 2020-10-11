@@ -48,21 +48,7 @@ template <typename T> class Modulo
     // Euler's theorem
     Modulo operator/(const Modulo<T> &other) const
     {
-        return Modulo<T>(((*this) * (other ^ Modulo(N - 2, N))).number % N, N);
-    };
-    // Exponentiation modulo via recursion
-    Modulo operator^(const Modulo<T> &exp) const
-    {
-        if (exp.number == 0)
-        {
-            return Modulo<T>(1, N);
-        };
-        if (exp.number % 2 == 1)
-        {
-            return Modulo(((*this) ^ Modulo(exp.number - 1, N) * (*this)).number % N, N);
-        };
-        Modulo<T> tmp = ((*this) ^ Modulo(exp.number / 2, N));
-        return Modulo<T>((tmp.number * tmp.number) % N, N);
+        return Modulo<T>((number / other.number) % N, N);
     };
     // Assignment via copy operator
     Modulo &operator=(const Modulo<T> &other)
@@ -103,3 +89,75 @@ template <typename T> class Modulo
         return out;
     }
 };
+
+// Prints help information
+void help()
+{
+    std::cout << "Available commands:" << std::endl;
+    std::cout << "  'plus number1 number2 module'" << std::endl;
+    std::cout << "  'minus number1 number2 module'" << std::endl;
+    std::cout << "  'mul number1 number2 module'" << std::endl;
+    std::cout << "  'div number1 number2 module'" << std::endl;
+    std::cout << "Type 'help' to get this information." << std::endl;
+    std::cout << "Type 'quit' or 'q' to quit." << std::endl;
+}
+
+int main()
+{
+    help();
+    std::string cmd;
+
+    while (true)
+    {
+        std::cout << ">>> ";
+        std::cin >> cmd;
+        // Checking for exit commands
+        if (cmd == "quit" || cmd == "q")
+        {
+            std::cin.clear();
+            std::cin.ignore();
+            break;
+        }
+        // Checking for entering commands
+        else if (cmd != "plus" && cmd != "minus" && cmd != "mul" && cmd != "div" || cmd == "help")
+        {
+            std::cin.clear();
+            std::cin.ignore();
+            help();
+            continue;
+        }
+
+        // Entering numbers and checking if they are correct
+        long long num1, num2, mod;
+        std::cin >> num1 >> num2 >> mod;
+        if (std::cin.fail() || mod == 0)
+        {
+            std::cin.clear();
+            std::cin.ignore();
+            std::cout << "Invalid input" << std::endl;
+            continue;
+        }
+        // Creating three numbers by Modulo
+        Modulo<long long> n1(num1, mod), n2(num2, mod), n3(0, mod);
+
+        // Executing commands
+        if (cmd == "plus")
+        {
+            n3 = n1 + n2;
+        }
+        else if (cmd == "minus")
+        {
+            n3 = n1 - n2;
+        }
+        else if (cmd == "mul")
+        {
+            n3 = n1 * n2;
+        }
+        else if (cmd == "div")
+        {
+            n3 = n1 / n2;
+        }
+        // Printing result
+        std::cout << n3 << std::endl;
+    }
+}
