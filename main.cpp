@@ -27,7 +27,7 @@ template <typename T> class Modulo
         number = 0;
         N = 1;
     };
-    Modulo(int a, int b)
+    Modulo(T a, T b)
     {
         N = b;
         number = a % b;
