@@ -48,6 +48,11 @@ template <typename T> class Modulo
     // Euler's theorem
     Modulo operator/(const Modulo<T> &other) const
     {
+        if (other.number == 0)
+        {
+            std::cout << "You can't divide by zero" << std::endl;
+            return Modulo<T>(number % N, N);
+        };
         return Modulo<T>((number / other.number) % N, N);
     };
     // Assignment via copy operator
@@ -87,7 +92,7 @@ template <typename T> class Modulo
     {
         out << instance.number;
         return out;
-    }
+    };
 };
 
 // Prints help information
@@ -100,7 +105,7 @@ void help()
     std::cout << "  'div number1 number2 module'" << std::endl;
     std::cout << "Type 'help' to get this information." << std::endl;
     std::cout << "Type 'quit' or 'q' to quit." << std::endl;
-}
+};
 
 int main()
 {
@@ -125,7 +130,7 @@ int main()
             std::cin.ignore();
             help();
             continue;
-        }
+        };
 
         // Entering numbers and checking if they are correct
         long long num1, num2, mod;
@@ -136,7 +141,7 @@ int main()
             std::cin.ignore();
             std::cout << "Invalid input" << std::endl;
             continue;
-        }
+        };
         // Creating three numbers by Modulo
         Modulo<long long> n1(num1, mod), n2(num2, mod), n3(0, mod);
 
@@ -159,5 +164,5 @@ int main()
         }
         // Printing result
         std::cout << n3 << std::endl;
-    }
-}
+    };
+};
