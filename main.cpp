@@ -64,4 +64,11 @@ template <typename T> class Modulo
         Modulo<T> tmp = ((*this) ^ Modulo(exp.number / 2, N));
         return Modulo<T>((tmp.number * tmp.number) % N, N);
     };
+    // Copy assignment
+    Modulo &operator=(const Modulo<T> &other)
+    {
+        number = other.number;
+        N = other.N;
+        return *this;
+    };
 };
