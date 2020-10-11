@@ -9,3 +9,27 @@
   виде перегрузки операторов. Необходимо реализовать пользовательский литерал
   для работы с константами типа Modulo.
 */
+
+#include <iostream>
+#include <string>
+
+class Modulo
+{
+    // Сlass fields
+  private:
+    int number;
+    int N;
+
+  public:
+    // Class constructor
+    Modulo()
+    {
+        number = 0;
+        N = 1;
+    };
+    Modulo(int a, int b)
+    {
+        N = b;
+        number = a % b;
+    };
+};
