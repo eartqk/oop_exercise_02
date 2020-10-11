@@ -71,4 +71,29 @@ template <typename T> class Modulo
         N = other.N;
         return *this;
     };
+    // Compare operators
+    bool operator==(const Modulo<T> &other) const
+    {
+        return number == other.number;
+    };
+    bool operator!=(const Modulo<T> &other) const
+    {
+        return number != other.number;
+    };
+    bool operator>(const Modulo<T> &other) const
+    {
+        return number > other.number;
+    };
+    bool operator<(const Modulo<T> &other) const
+    {
+        return number < other.number;
+    };
+    bool operator>=(const Modulo<T> &other) const
+    {
+        return ((*this) > other) || ((*this) == other);
+    };
+    bool operator<=(const Modulo<T> &other) const
+    {
+        return ((*this) < other) || ((*this) == other);
+    };
 };
