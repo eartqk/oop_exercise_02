@@ -97,7 +97,7 @@ template <typename T> class Modulo
         return ((*this) < other) || ((*this) == other);
     };
     // Output operator
-    friend std::ostream operator<<(std::ostream &out, const Modulo<T> &instance)
+    friend std::ostream &operator<<(std::ostream &out, const Modulo<T> &instance)
     {
         out << instance.number;
         return out;
