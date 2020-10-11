@@ -13,12 +13,12 @@
 #include <iostream>
 #include <string>
 
-class Modulo
+template <typename T> class Modulo
 {
     // Сlass fields
   private:
-    int number;
-    int N;
+    T number;
+    T N;
 
   public:
     // Class constructor
@@ -31,5 +31,37 @@ class Modulo
     {
         N = b;
         number = a % b;
+    };
+    // Arithmetical operations
+    Modulo operator+(const Modulo<T> &other) const
+    {
+        return Modulo<T>((number + other.number) % N, N);
+    };
+    Modulo operator-(const Modulo<T> &other) const
+    {
+        return Modulo<T>((number - other.number) % N, N);
+    };
+    Modulo operator*(const Modulo<T> &other) const
+    {
+        return Modulo<T>((number * other.number) % N, N);
+    };
+    // Euler's theorem
+    Modulo operator/(const Modulo<T> &other) const
+    {
+        return Modulo<T>(((*this) * pow(other, Modulo(N - 2, N))).number % N, N);
+    };
+    // Exponentiation modulo via recursion
+    Modulo operator^(const Modulo<T> exp) const
+    {
+        if (exp.number == 0)
+        {
+            return Modulo<T>(1, N);
+        };
+        if (exp.number % 2 == 1)
+        {
+            return Modulo(((*this) ^ Modulo(exp.number - 1, N) * (*this)).number % N, N);
+        };
+        Modulo<T> tmp = ((*this) ^ Modulo(exp.number / 2, N));
+        return Modulo<T>((tmp.number * tmp.number) % N, N);
     };
 };
