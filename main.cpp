@@ -48,10 +48,10 @@ template <typename T> class Modulo
     // Euler's theorem
     Modulo operator/(const Modulo<T> &other) const
     {
-        return Modulo<T>(((*this) * pow(other, Modulo(N - 2, N))).number % N, N);
+        return Modulo<T>(((*this) * (other ^ Modulo(N - 2, N))).number % N, N);
     };
     // Exponentiation modulo via recursion
-    Modulo operator^(const Modulo<T> exp) const
+    Modulo operator^(const Modulo<T> &exp) const
     {
         if (exp.number == 0)
         {
@@ -64,7 +64,7 @@ template <typename T> class Modulo
         Modulo<T> tmp = ((*this) ^ Modulo(exp.number / 2, N));
         return Modulo<T>((tmp.number * tmp.number) % N, N);
     };
-    // Copy assignment
+    // Assignment via copy operator
     Modulo &operator=(const Modulo<T> &other)
     {
         number = other.number;
