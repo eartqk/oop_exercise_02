@@ -103,6 +103,9 @@ void help()
     std::cout << "  'minus number1 number2 module'" << std::endl;
     std::cout << "  'mul number1 number2 module'" << std::endl;
     std::cout << "  'div number1 number2 module'" << std::endl;
+    std::cout << "  'equal number1 number2 module'" << std::endl;
+    std::cout << "  'more number1 number2 module'" << std::endl;
+    std::cout << "  'less number1 number2 module'" << std::endl;
     std::cout << "Type 'help' to get this information." << std::endl;
     std::cout << "Type 'quit' or 'q' to quit." << std::endl;
 };
@@ -124,7 +127,9 @@ int main()
             break;
         }
         // Checking for entering commands
-        else if (cmd != "plus" && cmd != "minus" && cmd != "mul" && cmd != "div" || cmd == "help")
+        else if (cmd != "plus" && cmd != "minus" && cmd != "mul" && cmd != "div" && cmd != "equal" && cmd != "less" &&
+                     cmd != "more" ||
+                 cmd == "help")
         {
             std::cin.clear();
             std::cin.ignore();
@@ -161,6 +166,21 @@ int main()
         else if (cmd == "div")
         {
             n3 = n1 / n2;
+        }
+        else if (cmd == "equal")
+        {
+            std::cout << ((n1 == n2) ? "True" : "False") << std::endl;
+            continue;
+        }
+        else if (cmd == "less")
+        {
+            std::cout << ((n1 < n2) ? "True" : "False") << std::endl;
+            continue;
+        }
+        else if (cmd == "more")
+        {
+            std::cout << ((n1 > n2) ? "True" : "False") << std::endl;
+            continue;
         }
         // Printing result
         std::cout << n3 << std::endl;
