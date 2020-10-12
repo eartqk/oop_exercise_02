@@ -14,12 +14,19 @@
 #include <string>
 
 // Typename is the data type (long long, int, short)
-template <typename T> class Modulo
+class Modulo
 {
     // Сlass fields
   private:
-    T number;
-    T N;
+    unsigned long long number;
+    unsigned long long N;
+
+    // User-defined literals
+    friend Modulo operator""_mod2(unsigned long long number);
+    friend Modulo operator""_mod5(unsigned long long number);
+    friend Modulo operator""_mod8(unsigned long long number);
+    friend Modulo operator""_mod10(unsigned long long number);
+    friend Modulo operator""_mod16(unsigned long long number);
 
   public:
     // Class constructor
@@ -28,72 +35,94 @@ template <typename T> class Modulo
         number = 0;
         N = 1;
     };
-    Modulo(T a, T b)
+    Modulo(unsigned long long a, unsigned long long b)
     {
         N = b;
         number = a % b;
     };
     // Arithmetical operations
-    Modulo operator+(const Modulo<T> &other) const
+    Modulo operator+(const Modulo &other) const
     {
-        return Modulo<T>((number + other.number) % N, N);
+        return Modulo((number + other.number) % N, N);
     };
-    Modulo operator-(const Modulo<T> &other) const
+    Modulo operator-(const Modulo &other) const
     {
-        return Modulo<T>((number - other.number) % N, N);
+        return Modulo((number - other.number) % N, N);
     };
-    Modulo operator*(const Modulo<T> &other) const
+    Modulo operator*(const Modulo &other) const
     {
-        return Modulo<T>((number * other.number) % N, N);
+        return Modulo((number * other.number) % N, N);
     };
     // Euler's theorem
-    Modulo operator/(const Modulo<T> &other) const
+    Modulo operator/(const Modulo &other) const
     {
         if (other.number == 0)
         {
             std::cout << "You can't divide by zero" << std::endl;
-            return Modulo<T>(number % N, N);
+            return Modulo(number % N, N);
         };
-        return Modulo<T>((number / other.number) % N, N);
+        return Modulo((number / other.number) % N, N);
     };
     // Assignment via copy operator
-    Modulo &operator=(const Modulo<T> &other)
+    Modulo &operator=(const Modulo &other)
     {
         number = other.number;
         N = other.N;
         return *this;
     };
     // Compare operators
-    bool operator==(const Modulo<T> &other) const
+    bool operator==(const Modulo &other) const
     {
         return number == other.number;
     };
-    bool operator!=(const Modulo<T> &other) const
+    bool operator!=(const Modulo &other) const
     {
         return number != other.number;
     };
-    bool operator>(const Modulo<T> &other) const
+    bool operator>(const Modulo &other) const
     {
         return number > other.number;
     };
-    bool operator<(const Modulo<T> &other) const
+    bool operator<(const Modulo &other) const
     {
         return number < other.number;
     };
-    bool operator>=(const Modulo<T> &other) const
+    bool operator>=(const Modulo &other) const
     {
         return ((*this) > other) || ((*this) == other);
     };
-    bool operator<=(const Modulo<T> &other) const
+    bool operator<=(const Modulo &other) const
     {
         return ((*this) < other) || ((*this) == other);
     };
     // Output operator
-    friend std::ostream &operator<<(std::ostream &out, const Modulo<T> &instance)
+    friend std::ostream &operator<<(std::ostream &out, const Modulo &instance)
     {
         out << instance.number;
         return out;
     };
+};
+
+// User-defined literals
+Modulo operator""_mod2(unsigned long long number)
+{
+    return Modulo(number % 2, 2);
+};
+Modulo operator""_mod5(unsigned long long number)
+{
+    return Modulo(number % 5, 5);
+};
+Modulo operator""_mod8(unsigned long long number)
+{
+    return Modulo(number % 8, 8);
+};
+Modulo operator""_mod10(unsigned long long number)
+{
+    return Modulo(number % 10, 10);
+};
+Modulo operator""_mod16(unsigned long long number)
+{
+    return Modulo(number % 16, 16);
 };
 
 // Prints help information
@@ -139,7 +168,7 @@ int main()
         };
 
         // Entering numbers and checking if they are correct
-        long long num1, num2, mod;
+        unsigned long long num1, num2, mod;
         std::cin >> num1 >> num2 >> mod;
         if (std::cin.fail() || mod == 0)
         {
@@ -149,7 +178,9 @@ int main()
             continue;
         };
         // Creating three numbers by Modulo
-        Modulo<long long> n1(num1, mod), n2(num2, mod), n3(0, mod);
+        Modulo n1(num1, mod);
+        Modulo n2(num2, mod);
+        Modulo n3(0, mod);
 
         // Executing commands
         if (cmd == "plus")
