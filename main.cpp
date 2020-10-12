@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 
+// Typename is the data type (long long, int, short)
 template <typename T> class Modulo
 {
     // Сlass fields
