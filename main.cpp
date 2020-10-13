@@ -18,8 +18,8 @@ class Modulo
 {
     // Сlass fields
   private:
-    unsigned long long number;
-    unsigned long long N;
+    long long number;
+    int N;
 
     // User-defined literals
     friend Modulo operator""_mod2(unsigned long long number);
@@ -35,7 +35,7 @@ class Modulo
         number = 0;
         N = 1;
     };
-    Modulo(unsigned long long a, unsigned long long b)
+    Modulo(long long a, int b)
     {
         N = b;
         number = a % b;
@@ -53,7 +53,6 @@ class Modulo
     {
         return Modulo((number * other.number) % N, N);
     };
-    // Euler's theorem
     Modulo operator/(const Modulo &other) const
     {
         if (other.number == 0)
@@ -166,7 +165,6 @@ int main()
             help();
             continue;
         };
-
         // Entering numbers and checking if they are correct
         unsigned long long num1, num2, mod;
         std::cin >> num1 >> num2 >> mod;
